@@ -1,0 +1,157 @@
+trigger:
+- desarrollo
+- qa
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+      # we can't use Build.SourceVersionMessage up here because it's not defined when the variables is set here   
+      isDevelop: $[eq(variables['Build.SourceBranch'], 'refs/heads/desarrollo')]
+      isQa: $[eq(variables['Build.SourceBranch'], 'refs/heads/qa')]
+      isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+
+stages:
+  - stage: desarrollo
+    displayName: desarrollo
+    jobs:
+    - job: BuildDesarrollo
+      condition: and(succeeded(), eq(variables.isDevelop, true))
+      displayName: Build Bff Clinica dev
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '16.16.0'
+        displayName: 'Install Node.js'
+
+      - task: Npm@1
+        inputs:
+          command: 'install'
+        displayName: 'npm install'  
+
+      - task: DownloadSecureFile@1
+        name: authkey
+        displayName: 'Download Service Account Key'
+        inputs:
+          secureFile: 'booming-coast-356114-9515db642988.json'
+          retryCount: '2'
+
+      - script: |
+          wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+          tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --quiet --usage-reporting=false --path-update=true
+          PATH="google-cloud-sdk/bin:${PATH}"
+          gcloud --quiet components update
+          echo $(authkey.secureFilePath)
+        displayName: 'install gcloud SDK'
+
+      - task: CmdLine@2
+        displayName: 'npm run build'
+        inputs:
+          script: |
+            npm run build
+      
+      - task: CmdLine@2
+        displayName: 'deploy function dev'
+        inputs:
+          script: |
+            gcloud auth activate-service-account --key-file $(authkey.secureFilePath)
+            gcloud config set project booming-coast-356114
+            gcloud app deploy app.yaml --quiet
+      
+
+  - stage: stage
+    displayName: stage
+    jobs:
+    - job: BuildStage
+      condition: and(succeeded(), eq(variables.isQa, true))
+      displayName: Build Bff Clinica stage
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '16.16.0'
+        displayName: 'Install Node.js'
+
+      - task: Npm@1
+        inputs:
+          command: 'install'
+        displayName: 'npm install'  
+
+      - task: DownloadSecureFile@1
+        name: authkey
+        displayName: 'Download Service Account Key'
+        inputs:
+          secureFile: 'alg-chile-qa-a4d6a6e0933c.json'
+          retryCount: '2'
+
+      - script: |
+          wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+          tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --quiet --usage-reporting=false --path-update=true
+          PATH="google-cloud-sdk/bin:${PATH}"
+          gcloud --quiet components update
+          echo $(authkey.secureFilePath)
+        displayName: 'install gcloud SDK'
+
+      - task: CmdLine@2
+        displayName: 'npm run build'
+        inputs:
+          script: |
+            npm run build
+          
+
+      
+      - task: CmdLine@2
+        displayName: 'deploy function qa'
+        inputs:
+          script: |
+            gcloud auth activate-service-account --key-file $(authkey.secureFilePath)
+            gcloud config set project alg-chile-qa
+            gcloud app deploy app.yaml --quiet
+
+
+  - stage: main
+    displayName: main
+    jobs:
+    - job: BuildMain
+      condition: and(succeeded(), eq(variables.isMain, true))
+      displayName: Build Bff Clinica Main
+      steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '16.16.0'
+        displayName: 'Install Node.js'
+
+      - task: Npm@1
+        inputs:
+          command: 'install'
+        displayName: 'npm install'  
+
+      - task: DownloadSecureFile@1
+        name: authkey
+        displayName: 'Download Service Account Key'
+        inputs:
+          secureFile: 'alg-chile-prod-442bedd2f16f.json'
+          retryCount: '2'
+
+      - script: |
+          wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+          tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --quiet --usage-reporting=false --path-update=true
+          PATH="google-cloud-sdk/bin:${PATH}"
+          gcloud --quiet components update
+          echo $(authkey.secureFilePath)
+        displayName: 'install gcloud SDK'
+
+      - task: CmdLine@2
+        displayName: 'npm run build'
+        inputs:
+          script: |
+            npm run build
+          
+
+      - task: CmdLine@2
+        displayName: 'deploy function main'
+        inputs:
+          script: |
+            gcloud auth activate-service-account --key-file $(authkey.secureFilePath)
+            gcloud config set project alg-chile-prod
+            gcloud app deploy app-prod.yaml --quiet

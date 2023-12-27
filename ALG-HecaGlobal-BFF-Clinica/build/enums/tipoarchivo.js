@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tipoarchivo = void 0;
+var tipoarchivo;
+(function (tipoarchivo) {
+    tipoarchivo[tipoarchivo["Cedula_Identidad"] = 1] = "Cedula_Identidad";
+    tipoarchivo[tipoarchivo["Comprobante_Domicilio"] = 2] = "Comprobante_Domicilio";
+    tipoarchivo[tipoarchivo["Pagare"] = 3] = "Pagare";
+    tipoarchivo[tipoarchivo["Contrato"] = 4] = "Contrato";
+    tipoarchivo[tipoarchivo["Foto_Pagina_2_Pagare_Firmado"] = 5] = "Foto_Pagina_2_Pagare_Firmado";
+    tipoarchivo[tipoarchivo["Foto_Pagina_3_Pagare_Firmado"] = 6] = "Foto_Pagina_3_Pagare_Firmado";
+    tipoarchivo[tipoarchivo["Foto_Pagina_4_Pagare_Firmado"] = 7] = "Foto_Pagina_4_Pagare_Firmado";
+    tipoarchivo[tipoarchivo["Foto_Copia_CI_Firmado"] = 8] = "Foto_Copia_CI_Firmado";
+    tipoarchivo[tipoarchivo["Foto_Copia_CI_Codeudor_Firmado"] = 9] = "Foto_Copia_CI_Codeudor_Firmado";
+    tipoarchivo[tipoarchivo["Comprobante_Domicilio_Codeudor"] = 10] = "Comprobante_Domicilio_Codeudor";
+    tipoarchivo[tipoarchivo["Cedula_Identidad_Codeudor"] = 11] = "Cedula_Identidad_Codeudor";
+    tipoarchivo[tipoarchivo["Equifax"] = 12] = "Equifax";
+    tipoarchivo[tipoarchivo["Pagare_notariado"] = 13] = "Pagare_notariado";
+    tipoarchivo[tipoarchivo["Equifax_codeudor"] = 14] = "Equifax_codeudor";
+    tipoarchivo[tipoarchivo["Previred"] = 15] = "Previred";
+    tipoarchivo[tipoarchivo["Previred_codeudor"] = 16] = "Previred_codeudor";
+})(tipoarchivo = exports.tipoarchivo || (exports.tipoarchivo = {}));

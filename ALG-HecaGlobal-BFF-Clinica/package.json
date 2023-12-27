@@ -1,0 +1,53 @@
+{
+  "name": "alg-hecglobal-bff-clinica",
+  "version": "1.0.0",
+  "description": "1.  Crear carpeta para MS.\r 2. \tEjecutar en terminal **`npm init -y`** para inicializar carpeta de proyecto en nodejs.\r 3.  Ejecutar en terminal **`npm i typescript -D`** para instalar typescript.\r 4.  Revisar archivo tsconfig.json y dejar la misma configuración en sus MS.\r     - express: framework de nodejs\r     - pg: modulo de conexión a postgres\r     - sequelize: (Object-Relational mapping) \r     - dotenv: para mantener variables de entorno, este paquete obliga a crear el archivo .env y .env.example, este ultimo es para dejar el ejemplo de las variables que debemos crear en el .env\r \t- cors: middleware para express\r \tComando de instalación: **`npm i express pg cors dotenv sequelize`**\r 5.  Instalar modulos para ambiente desarrollo\r \t* `npm i @types/pg`\r     * `npm i nodemon -D`\r     * `npm i @types/express -D`\r     * `npm i concurrently -D`\r     * `npm i nodemon -D`\r     * `npm i @types/node -D`\r     * `npm i @types/http-errors -D`\r 6.\tExtensión para desarrollo **vs code**, esto es para tener ayuda o intelligence en pantalla OPCIONAL\r \t**ES7 React/Redux/GraphQL/React-Native snippets**\r 7.  Para utilizar nodemon y tsc compilador de typescript, modificar archivo **package.json** ejemplo:\r \t**`\"scripts\": {dev\": \"concurrently \\\"tsc --watch\\\" \\\"nodemon dist/index.js\\\"\", \"build\": \"tsc\"},`** lo que quiere decir es que a la vez esta ejecutando ts en el modo watch y nodemon\r \tpara ejecutar el proyecto nodemon se debe escribir en consola el comando **`npm run dev`**\r 8.  Crear archivo **development.env**, **production.env** y **.env.example**\r 9.  para compilar se debe ejecutar comando **`npm run build`**",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon build/index.js \"",
+    "start:dev": "cross-env NODE_ENV=development nodemon src/index.ts",
+    "prod": "cross-env NODE_ENV=production concurrently \"tsc --watch\" \"nodemon build/index.js \"",
+    "build": "tsc",
+    "start": "node build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/http-errors": "^1.8.2",
+    "@types/node": "^18.6.3",
+    "@types/swagger-jsdoc": "^6.0.1",
+    "@types/swagger-ui-express": "^4.1.3",
+    "concurrently": "^7.3.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@google-cloud/secret-manager": "^4.2.1",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/pg": "^8.6.5",
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "fs": "*",
+    "html-pdf": "^3.0.1",
+    "html-pdf-node": "^1.0.8",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "numero-a-letras": "^1.0.6",
+    "pg": "^8.7.3",
+    "puppeteer": "^21.6.1",
+    "rut-formatter": "^1.0.1",
+    "sequelize": "^6.21.3",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.5.0"
+  }
+}

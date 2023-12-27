@@ -1,0 +1,9 @@
+service: bff-clinica
+runtime: nodejs16
+vpc_access_connector:
+  name: projects/alg-chile-prod/locations/southamerica-east1/connectors/alg-cl-vpc-connector
+  egress_setting: all-traffic
+env_variables:
+  NODE_ENV: production
+  PORT: 8080
+  NODE_TLS_REJECT_UNAUTHORIZED: 0
